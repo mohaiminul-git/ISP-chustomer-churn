@@ -1,17 +1,9 @@
-awscli
-ipython
-jupyterlab
-loguru
-matplotlib
-mkdocs
-notebook
-numpy
-pandas
-pip
-pytest
-python-dotenv
-ruff
-scikit-learn
-tqdm
-typer
 -e .
+pytest
+ruff          
+jupyterlab
+mkdocs
+ipython
+notebook
+awscli
+

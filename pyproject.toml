@@ -18,8 +18,12 @@ classifiers = [
 requires-python = "~=3.10.0"
 dependencies = [
     "kagglehub>=1.0.2",
+    "loguru>=0.7.3",
+    "pandas>=2.3.3",
     "pydantic>=2.13.5",
+    "python-dotenv>=1.2.3",
     "seaborn>=0.13.2",
+    "typer>=0.27.2",
 ]
 
 
