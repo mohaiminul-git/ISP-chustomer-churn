@@ -1,5 +1,7 @@
 
 from pydantic import BaseModel, Field, ConfigDict
+import pandas as pd
+from pathlib import Path
 
 
 
@@ -19,3 +21,13 @@ class DataScheme(BaseModel):
     download_over_limit: int
     churn: int= Field(ge=0, le=1)
     
+    
+    
+def save_file(data_path: Path, df:pd.DataFrame, df_name: str):
+    file_path= data_path/f"{df_name}.csv"
+    file_path.parent.mkdir(exist_ok=True)
+    df.to_csv(file_path, index=False)
+    
+def load_file(data_path: Path)-> pd.DataFrame:
+    data= pd.read_csv(data_path)
+    return data
