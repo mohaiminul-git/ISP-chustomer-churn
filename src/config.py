@@ -1,7 +1,6 @@
 from pathlib import Path
-
-from dotenv import load_dotenv
 from loguru import logger
+from dotenv import load_dotenv
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 
@@ -19,7 +18,9 @@ PROCESSED_DATA_DIR = DATA_DIR / "processed"
 EXTERNAL_DATA_DIR = DATA_DIR / "external"
 
 MODELS_DIR = PROJ_ROOT / "models"
+LOGS_DIR= PROJ_ROOT/"logs"
 
 REPORTS_DIR = PROJ_ROOT / "reports"
 FIGURES_DIR = REPORTS_DIR / "figures"
+
 
