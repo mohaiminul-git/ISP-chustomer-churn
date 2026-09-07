@@ -11,29 +11,28 @@ from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import GridSearchCV, StratifiedKFold, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
+from src.utils import LogTransformer,save_file
 
-from src.config import MODELS_DIR, PROCESSED_DATA_DIR, config
-from src.utils import save_file, LogTransformer
+
+from src.config import MODELS_DIR, PROCESSED_DATA_DIR
+from src.model_builder import estimatore_builder, model_param_getter, param_config
 
 app = typer.Typer()
 
 
-
-
 class ModelTrainer:
-    def __init__(self, df: pd.DataFrame, config: dict, model_name: str):
+    def __init__(self, df: pd.DataFrame, model_name: str):
         self.df = df
-        self.config = config
         self.model_name = model_name
 
     def split_data(self):
-        X = self.df.drop(columns=[self.config["target_col"]])
-        y = self.df[self.config["target_col"]]
+        X = self.df.drop(columns=[param_config["target_col"]])
+        y = self.df[param_config["target_col"]]
         return train_test_split(
             X,
             y,
-            test_size=self.config["test_size"],
-            random_state=self.config["random_state"],
+            test_size=param_config["test_size"],
+            random_state=param_config["random_state"],
             stratify=y,
         )
 
@@ -46,13 +45,13 @@ class ModelTrainer:
         )
         preprocessor = ColumnTransformer(
             transformers=[
-                ("numeric", numeric_transformer, self.config["numeric_cols"]),
-                ("binary", "passthrough", self.config["binary_cols"]),
+                ("numeric", numeric_transformer, param_config["numeric_cols"]),
+                ("binary", "passthrough", param_config["binary_cols"]),
             ]
         )
-        model_spec = self.config["models"][self.model_name]
+        model_spec = estimatore_builder(self.model_name)
         return Pipeline(
-            steps=[("preprocessor", preprocessor), ("clf", model_spec["estimator"])]
+            steps=[("preprocessor", preprocessor), ("clf", model_spec)]
         )
 
     def train(self):
@@ -68,12 +67,12 @@ class ModelTrainer:
             save_file(data_dir, value, key)
 
         pipeline = self.build_pipeline()
-        param_grid = self.config["models"][self.model_name]["params"]
+        param_grid = model_param_getter(self.model_name)
 
         cv = StratifiedKFold(
-            n_splits=self.config["cv_folds"],
+            n_splits=param_config["cv_folds"],
             shuffle=True,
-            random_state=self.config["random_state"],
+            random_state=param_config["random_state"],
         )
 
         logger.info(f"Running GridSearchCV for '{self.model_name}' over {param_grid}")
@@ -107,15 +106,15 @@ def main(
     if model_path == None:
         model_path = MODELS_DIR / f"{model_name}.pkl"
 
-    if model_name not in config["models"]:
+    if model_name not in param_config["models"].keys():
         raise typer.BadParameter(
-            f"Unknown model '{model_name}', choose from {list(config['models'])}"
+            f'Unknown model "{model_name}", choose from {param_config["models"].keys()}'
         )
 
     logger.info(f"Loading processed dataset from {input_path}...")
     df = pd.read_csv(input_path)
 
-    trainer = ModelTrainer(df, config, model_name)
+    trainer = ModelTrainer(df, model_name)
     best_model = trainer.train()
 
     model_path.parent.mkdir(parents=True, exist_ok=True)

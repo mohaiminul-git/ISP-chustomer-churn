@@ -1,0 +1,47 @@
+
+numeric_cols:
+  - subscription_age
+  - bill_avg
+  - remaining_contract
+  - service_failure_count
+  - download_avg
+  - upload_avg
+  - download_over_limit
+  - cost_per_usage
+  - num_services_subscribed
+
+binary_cols:
+  - is_tv_subscriber
+  - is_movie_package_subscriber
+
+target_col: churn
+
+test_size: 0.2
+random_state: 42
+
+scaler: standard
+
+models:
+
+  logistic_regression:
+    params:
+      clf__C:
+        - 0.01
+        - 0.1
+        - 1
+        - 10
+
+  random_forest:
+    params:
+      clf__n_estimators:
+        - 100
+        - 200
+
+      clf__max_depth:
+        - 3
+        - 5
+
+cv_folds: 3
+
+mlflow_experiment: training_pipeline
+mlflow_model_name: fault_classifier
