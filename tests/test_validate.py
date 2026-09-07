@@ -17,11 +17,10 @@ VALID_ROW = {
     "churn": 0,
 }
 
-
-def make_df(**overrides) -> pd.DataFrame:
-    row = {**VALID_ROW, **overrides}
+def make_df(**overrides)-> pd.DataFrame:
+    row={**VALID_ROW,**overrides}
     return pd.DataFrame([row])
-
+    
 
 def test_valid_dataframe_returns_no_warnings():
     df = make_df()

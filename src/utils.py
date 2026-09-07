@@ -2,7 +2,9 @@
 from pydantic import BaseModel, Field, ConfigDict
 import pandas as pd
 from pathlib import Path
+import numpy as np
 
+from sklearn.base import BaseEstimator, TransformerMixin
 
 
 class DataScheme(BaseModel):
@@ -21,7 +23,19 @@ class DataScheme(BaseModel):
     download_over_limit: int
     churn: int= Field(ge=0, le=1)
     
-    
+
+
+## scikit learn compitale transformer class
+class LogTransformer(BaseEstimator, TransformerMixin):
+    """log1p on the columns it receives. Stateless, so fit() is a no-op."""
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X: pd.DataFrame, y=None) -> pd.DataFrame:
+        return np.log1p(X)
+
+
     
 def save_file(data_path: Path, df:pd.DataFrame, df_name: str):
     file_path= data_path/f"{df_name}.csv"

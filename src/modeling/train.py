@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 from loguru import logger
 import typer
-from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import GridSearchCV, StratifiedKFold, train_test_split
@@ -14,19 +13,11 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 from src.config import MODELS_DIR, PROCESSED_DATA_DIR, config
-from src.utils import save_file
+from src.utils import save_file, LogTransformer
 
 app = typer.Typer()
 
 
-class LogTransformer(BaseEstimator, TransformerMixin):
-    """log1p on the columns it receives. Stateless, so fit() is a no-op."""
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X: pd.DataFrame, y=None) -> pd.DataFrame:
-        return np.log1p(X)
 
 
 class ModelTrainer:

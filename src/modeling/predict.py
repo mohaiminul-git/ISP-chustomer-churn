@@ -6,8 +6,7 @@ import typer
 import joblib
 
 from src.config import MODELS_DIR, PROCESSED_DATA_DIR
-from src.utils import load_file, save_file
-from src.modeling.train import LogTransformer
+from src.utils import load_file, save_file, LogTransformer
 import pandas as pd
 
 
