@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field, ConfigDict
 import pandas as pd
 from pathlib import Path
 import numpy as np
-
+from typing import Any
 from sklearn.base import BaseEstimator, TransformerMixin
 
 
@@ -25,6 +25,10 @@ class DataScheme(BaseModel):
     
 
 
+
+    
+
+
 ## scikit learn compitale transformer class
 class LogTransformer(BaseEstimator, TransformerMixin):
     """log1p on the columns it receives. Stateless, so fit() is a no-op."""
@@ -37,11 +41,22 @@ class LogTransformer(BaseEstimator, TransformerMixin):
 
 
     
-def save_file(data_path: Path, df:pd.DataFrame, df_name: str):
+def save_csv(data_path: Path, df:pd.DataFrame, df_name: str):
     file_path= data_path/f"{df_name}.csv"
     file_path.parent.mkdir(exist_ok=True)
     df.to_csv(file_path, index=False)
     
-def load_file(data_path: Path)-> pd.DataFrame:
+def load_csv(data_path: Path)-> pd.DataFrame:
     data= pd.read_csv(data_path)
     return data
+
+def save_file(file_path:Path, content:Any):
+    with open(file_path, "w") as f:
+        f.write(content)
+
+
+
+        
+        
+        
+    

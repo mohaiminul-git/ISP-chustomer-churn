@@ -1,11 +1,7 @@
 from loguru import logger
 from src.config import LOGS_DIR
-from datetime import datetime
 
-
-
-timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-LOGS_DIR.parent.mkdir(exist_ok=True)
+LOGS_DIR.mkdir(exist_ok=True)
 logger.remove()
 
 
@@ -23,7 +19,7 @@ logger.add(
 
 # File logging
 logger.add(
-    LOGS_DIR / f"{timestamp}.log",
+    LOGS_DIR / "records.log",
     level="INFO",
     format="{time:YYYY-MM-DD HH:mm:ss} | "
            "{level: <8} | "

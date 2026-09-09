@@ -1,6 +1,9 @@
 # Data
 /data/
 
+# Trained models (versioned via MLflow/DagsHub instead)
+/models/*.pkl
+
 # Mac OS-specific storage files
 .DS_Store
 
@@ -189,3 +192,4 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+/models/*.pkl
