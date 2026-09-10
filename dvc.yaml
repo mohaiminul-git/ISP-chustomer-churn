@@ -1,0 +1,50 @@
+
+stages:
+  ingest:
+    cmd: python src/dataset.py
+    deps:
+      - src/dataset.py
+    outs:
+      - data/raw/dataset.csv
+
+  validate:
+    cmd: python src/validate.py
+    deps:
+      - src/validate.py
+      - src/utils.py
+      - data/raw/dataset.csv
+    outs:
+      - reports/validation_passed.txt
+  clean:
+    cmd: python src/data_clean.py
+    deps:
+      - src/data_clean.py
+      - data/raw/dataset.csv
+      - reports/validation_passed.txt
+    outs:
+      - data/interim/cleaned_dataset.csv
+
+  features:
+    cmd: python src/features.py
+    deps:
+      - src/features.py
+      - data/interim/cleaned_dataset.csv
+    outs:
+      - data/processed/processed_dataset.csv
+
+  train:
+    cmd: python src/modeling/train.py
+    deps:
+      - src/modeling/train.py
+      - src/utils.py
+      - data/processed/processed_dataset.csv
+      - param_config.yaml
+    outs:
+      - data/processed/X_train.csv
+      - data/processed/X_test.csv
+      - data/processed/y_train.csv
+      - data/processed/y_test.csv
+      - reports/classification.txt
+      - reports/figures/confusion_matrix.png
+      - reports/figures/optimize_graph.png
+      - models/model.pkl

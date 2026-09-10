@@ -2,7 +2,7 @@ from pathlib import Path
 from loguru import logger
 import pandas as pd
 import typer
-from src.config import RAW_DATA_DIR
+from src.config import RAW_DATA_DIR, REPORTS_DIR
 
 from pydantic import  TypeAdapter, ValidationError 
 from src.utils import DataScheme
@@ -23,10 +23,13 @@ def validate_schema_and_properties(dataset_path: Path = RAW_DATA_DIR / "dataset.
         logger.success("Dataset schema validation passed.")
         schema= True
         if schema:
-            validate_data(data)        
+            validate_data(data)
+            Path(REPORTS_DIR/"validation.txt").write_text("ok")
+                    
     except ValidationError as e:
         logger.error(f"Dataset schema validation failed: {e}")
         raise typer.Exit(code=1)
+    
     
     
 
