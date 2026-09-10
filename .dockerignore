@@ -1,0 +1,11 @@
+.env
+.venv/
+.git/
+data/
+models/
+logs/
+mlruns/
+notebooks/
+reports/
+.dvc/cache/
+.dvc/config.local

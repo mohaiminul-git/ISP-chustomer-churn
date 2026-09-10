@@ -1215,6 +1215,47 @@ wheels = [
 ]
 
 [[package]]
+name = "isp-churn"
+version = "0.0.1"
+source = { editable = "." }
+dependencies = [
+    { name = "black" },
+    { name = "dagshub" },
+    { name = "dvc" },
+    { name = "kagglehub" },
+    { name = "loguru" },
+    { name = "mlflow" },
+    { name = "optuna" },
+    { name = "pandas" },
+    { name = "pydantic" },
+    { name = "python-dotenv" },
+    { name = "pyyaml" },
+    { name = "scikit-learn" },
+    { name = "seaborn" },
+    { name = "typer" },
+    { name = "xgboost" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "black", specifier = ">=26.5.1" },
+    { name = "dagshub", specifier = ">=0.7.2" },
+    { name = "dvc", specifier = ">=3.67.1" },
+    { name = "kagglehub", specifier = ">=1.0.2" },
+    { name = "loguru", specifier = ">=0.7.3" },
+    { name = "mlflow", specifier = ">=3.16.0" },
+    { name = "optuna", specifier = ">=5.0.0" },
+    { name = "pandas", specifier = ">=2.3.3" },
+    { name = "pydantic", specifier = ">=2.13.5" },
+    { name = "python-dotenv", specifier = ">=1.2.3" },
+    { name = "pyyaml", specifier = ">=6.0.3" },
+    { name = "scikit-learn", specifier = ">=1.7.2" },
+    { name = "seaborn", specifier = ">=0.13.2" },
+    { name = "typer", specifier = ">=0.27.2" },
+    { name = "xgboost", specifier = ">=3.2.0" },
+]
+
+[[package]]
 name = "iterative-telemetry"
 version = "0.0.10"
 source = { registry = "https://pypi.org/simple" }
@@ -2376,47 +2417,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/60/63/ff6509fa8f06bbaa8cffdba4dd9c01bfd9c6af3dc40c95d7669a09d2f659/sqltrie-0.11.3.tar.gz", hash = "sha256:358fb71b236311c74598616e071b43b38fc74921e5724c4659e47998e8b27e95", size = 25006, upload-time = "2026-09-01T17:45:24.899Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d9/b3/964c1595267bae401e4c166f748c2e25760a361382b3be8f326c5c5c8d37/sqltrie-0.11.3-py3-none-any.whl", hash = "sha256:2ea7dec60f02982226cc21da4acdf57fcde33a0092c14edd1c5e3cf536da558d", size = 17165, upload-time = "2026-09-01T17:45:23.496Z" },
-]
-
-[[package]]
-name = "src"
-version = "0.0.1"
-source = { editable = "." }
-dependencies = [
-    { name = "black" },
-    { name = "dagshub" },
-    { name = "dvc" },
-    { name = "kagglehub" },
-    { name = "loguru" },
-    { name = "mlflow" },
-    { name = "optuna" },
-    { name = "pandas" },
-    { name = "pydantic" },
-    { name = "python-dotenv" },
-    { name = "pyyaml" },
-    { name = "scikit-learn" },
-    { name = "seaborn" },
-    { name = "typer" },
-    { name = "xgboost" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "black", specifier = ">=26.5.1" },
-    { name = "dagshub", specifier = ">=0.7.2" },
-    { name = "dvc", specifier = ">=3.67.1" },
-    { name = "kagglehub", specifier = ">=1.0.2" },
-    { name = "loguru", specifier = ">=0.7.3" },
-    { name = "mlflow", specifier = ">=3.16.0" },
-    { name = "optuna", specifier = ">=5.0.0" },
-    { name = "pandas", specifier = ">=2.3.3" },
-    { name = "pydantic", specifier = ">=2.13.5" },
-    { name = "python-dotenv", specifier = ">=1.2.3" },
-    { name = "pyyaml", specifier = ">=6.0.3" },
-    { name = "scikit-learn", specifier = ">=1.7.2" },
-    { name = "seaborn", specifier = ">=0.13.2" },
-    { name = "typer", specifier = ">=0.27.2" },
-    { name = "xgboost", specifier = ">=3.2.0" },
 ]
 
 [[package]]
