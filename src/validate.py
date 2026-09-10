@@ -24,7 +24,7 @@ def validate_schema_and_properties(dataset_path: Path = RAW_DATA_DIR / "dataset.
         schema= True
         if schema:
             validate_data(data)
-            Path(REPORTS_DIR/"validation.txt").write_text("ok")
+            Path(REPORTS_DIR/"validation_passed.txt").write_text("ok")
                     
     except ValidationError as e:
         logger.error(f"Dataset schema validation failed: {e}")

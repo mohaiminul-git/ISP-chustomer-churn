@@ -1,0 +1,122 @@
+schema: '2.0'
+stages:
+  ingest:
+    cmd: python src/dataset.py
+    deps:
+    - path: src/dataset.py
+      hash: md5
+      md5: ebd1dfc3197e1d73bc09729bc6de412b
+      size: 951
+    outs:
+    - path: data/raw/dataset.csv
+      hash: md5
+      md5: 365b3b5178e36de97516c65088c46e11
+      size: 2681842
+  validate:
+    cmd: python src/validate.py
+    deps:
+    - path: data/raw/dataset.csv
+      hash: md5
+      md5: 365b3b5178e36de97516c65088c46e11
+      size: 2681842
+    - path: src/utils.py
+      hash: md5
+      md5: 2fb622c485f3931af7ba713e67be8df5
+      size: 1341
+    - path: src/validate.py
+      hash: md5
+      md5: b96273a5aabc4ca1fe88542d208df38d
+      size: 2629
+    outs:
+    - path: reports/validation_passed.txt
+      hash: md5
+      md5: 444bcb3a3fcf8389296c49467f27e1d6
+      size: 2
+  clean:
+    cmd: python src/data_clean.py
+    deps:
+    - path: data/raw/dataset.csv
+      hash: md5
+      md5: 365b3b5178e36de97516c65088c46e11
+      size: 2681842
+    - path: reports/validation_passed.txt
+      hash: md5
+      md5: 444bcb3a3fcf8389296c49467f27e1d6
+      size: 2
+    - path: src/data_clean.py
+      hash: md5
+      md5: 8b4db1f1113f501b6c91278de5df3485
+      size: 1632
+    outs:
+    - path: data/interim/cleaned_dataset.csv
+      hash: md5
+      md5: 2af8ad03360f58183ec77dee5861244d
+      size: 2347529
+  features:
+    cmd: python src/features.py
+    deps:
+    - path: data/interim/cleaned_dataset.csv
+      hash: md5
+      md5: 2af8ad03360f58183ec77dee5861244d
+      size: 2347529
+    - path: src/features.py
+      hash: md5
+      md5: 26a3419c3d0f91cd49c607dc3441d8bb
+      size: 1136
+    outs:
+    - path: data/processed/processed_dataset.csv
+      hash: md5
+      md5: 3578f873ce7b8ebdfe8d99cbba03cd0d
+      size: 3631180
+  train:
+    cmd: python src/modeling/train.py
+    deps:
+    - path: data/processed/processed_dataset.csv
+      hash: md5
+      md5: 3578f873ce7b8ebdfe8d99cbba03cd0d
+      size: 3631180
+    - path: param_config.yaml
+      hash: md5
+      md5: ff32ad933280495b96a6bee45fc097cd
+      size: 1298
+    - path: src/modeling/train.py
+      hash: md5
+      md5: 4653ff54fe93a5443d035732b72b1aa4
+      size: 12033
+    - path: src/utils.py
+      hash: md5
+      md5: 2fb622c485f3931af7ba713e67be8df5
+      size: 1341
+    outs:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: 5ea575567aa5ac62d7924d75c70bdf81
+      size: 694366
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: 91afa792285b3c51795311c9e872a063
+      size: 2773909
+    - path: data/processed/y_test.csv
+      hash: md5
+      md5: d1a025169539f38910b1e8beb221f315
+      size: 28056
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: 863e0d3fda28a638d7ad07922dace53c
+      size: 112206
+    - path: models/model.pkl
+      hash: md5
+      md5: a5b614efeae615c3960a20fae51697c6
+      size: 4478189
+    - path: reports/classification.txt
+      hash: md5
+      md5: 2b0622bde985847b0f9a000e27e3b445
+      size: 326
+    - path: reports/figures/confusion_matrix.png
+      hash: md5
+      md5: 4c8180f9c471b614ac3873217b2ad18a
+      size: 19920
+    - path: reports/figures/optimize_graph.png
+      hash: md5
+      md5: f12557c43162c2bca434dcf71f33f115
+      size: 24023

@@ -304,7 +304,7 @@ def main(
     best_model, classifier_name = trainer.train()
 
     if model_path is None:
-        model_path = MODELS_DIR /"model".pkl"
+        model_path = MODELS_DIR /"model.pkl"
         
     
 
