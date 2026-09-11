@@ -5,6 +5,7 @@ from pathlib import Path
 import numpy as np
 from typing import Any
 from sklearn.base import BaseEstimator, TransformerMixin
+import mlflow
 
 
 class DataScheme(BaseModel):
@@ -25,8 +26,6 @@ class DataScheme(BaseModel):
     
 
 
-
-    
 
 
 ## scikit learn compitale transformer class
@@ -54,8 +53,8 @@ def save_file(file_path:Path, content:Any):
     with open(file_path, "w") as f:
         f.write(content)
 
-
-
+def load_champion_model(model_uri="models:/fault_classifier@champion"):
+    return mlflow.sklearn.load_model(model_uri)
         
         
         

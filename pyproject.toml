@@ -20,6 +20,7 @@ dependencies = [
     "black>=26.5.1",
     "dagshub>=0.7.2",
     "dvc>=3.67.1",
+    "fastapi[standard]>=0.141.1",
     "kagglehub>=1.0.2",
     "loguru>=0.7.3",
     "mlflow>=3.16.0",
@@ -31,6 +32,7 @@ dependencies = [
     "scikit-learn>=1.7.2",
     "seaborn>=0.13.2",
     "typer>=0.27.2",
+    "uvicorn>=0.52.4",
     "xgboost>=3.2.0",
 ]
 
@@ -48,4 +50,9 @@ extend-select = ["I"]  # Add import sorting
 [tool.ruff.lint.isort]
 known-first-party = ["src"]
 force-sort-within-sections = true
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
 

@@ -295,7 +295,7 @@ class ModelTrainer:
 @app.command()
 def main(
     input_path: Path = PROCESSED_DATA_DIR / "processed_dataset.csv",
-    model_path: Path = None,
+    model_path: Path = None
 ):
     logger.info(f"Loading processed dataset from {input_path}...")
     df = pd.read_csv(input_path)
