@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,status
 from api.lifespan import lifespan
 from api import batch_router
 from api import single_router
@@ -18,7 +18,7 @@ app.include_router(single_router.router)
 
 
 
-@app.get("/health")
+@app.get("/health", status_code=status.HTTP_200_OK)
 def health_check():
     return {"status": "healthy"}
     

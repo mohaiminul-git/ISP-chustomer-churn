@@ -23,15 +23,13 @@ dagshub.init(
 
 @app.command()
 def main(
-    # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
     input_path: Path = PROCESSED_DATA_DIR / "X_test.csv",
     prediction_type: Annotated[
         Literal["single", "Batch"],
         typer.Option()
         ]="single",
     sklearn_model_path= None
-    # -----------------------------------------
-):
+    ):
     
     test_data= load_csv(input_path)
     if sklearn_model_path == None:
@@ -52,10 +50,9 @@ def main(
     logger.info("Inference from the champion model is complete")
             
         
-        
+  
 
 def predict_single(input_df: pd.DataFrame, model):
-    
     pred= model.predict(input_df)
     return {"churn_prediction": int(pred[0])}
 

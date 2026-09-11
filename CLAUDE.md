@@ -55,6 +55,12 @@ unless the user explicitly requests them.
 
 Small syntax examples are allowed when necessary to explain a concept, but avoid giving the complete solution to the current task.
 
+## Code delivery
+
+Even when the user explicitly asks for code, default to printing it as a code block in the chat response rather than writing or editing project files directly. The user applies it themselves.
+
+Only write or edit a file directly when the user explicitly says to apply/update/write it into the file in that same request.
+
 ## Progressive hints
 
 When the user is stuck, use progressive hints:
