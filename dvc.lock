@@ -21,8 +21,8 @@ stages:
       size: 2681842
     - path: src/utils.py
       hash: md5
-      md5: 2fb622c485f3931af7ba713e67be8df5
-      size: 1341
+      md5: cb0d437877b275883db0836d91bd8ca7
+      size: 1467
     - path: src/validate.py
       hash: md5
       md5: b96273a5aabc4ca1fe88542d208df38d
@@ -77,25 +77,25 @@ stages:
       size: 3631180
     - path: param_config.yaml
       hash: md5
-      md5: ff32ad933280495b96a6bee45fc097cd
-      size: 1298
+      md5: 33b8398fd307278a38593dacf8c1035c
+      size: 1296
     - path: src/modeling/train.py
       hash: md5
-      md5: 4653ff54fe93a5443d035732b72b1aa4
-      size: 12033
+      md5: 03d6bcc1e48ca96bd1a469f8ab7f9a54
+      size: 12032
     - path: src/utils.py
       hash: md5
-      md5: 2fb622c485f3931af7ba713e67be8df5
-      size: 1341
+      md5: cb0d437877b275883db0836d91bd8ca7
+      size: 1467
     outs:
     - path: data/processed/X_test.csv
       hash: md5
-      md5: 5ea575567aa5ac62d7924d75c70bdf81
-      size: 694366
+      md5: 949a251a5a134f8ecd212ceea636a3cd
+      size: 694240
     - path: data/processed/X_train.csv
       hash: md5
-      md5: 91afa792285b3c51795311c9e872a063
-      size: 2773909
+      md5: 02d83c0dc9c836efb6f88ede4f378fad
+      size: 2773341
     - path: data/processed/y_test.csv
       hash: md5
       md5: d1a025169539f38910b1e8beb221f315
@@ -106,17 +106,17 @@ stages:
       size: 112206
     - path: models/model.pkl
       hash: md5
-      md5: a5b614efeae615c3960a20fae51697c6
-      size: 4478189
+      md5: c2b52b9735e51b50e8a2bfbf095792d6
+      size: 2846083
     - path: reports/classification.txt
       hash: md5
-      md5: 2b0622bde985847b0f9a000e27e3b445
+      md5: 2697e83d5574e4cf7cd8ae392b805601
       size: 326
     - path: reports/figures/confusion_matrix.png
       hash: md5
-      md5: 4c8180f9c471b614ac3873217b2ad18a
-      size: 19920
+      md5: 83029214f7aef814e9a78534d1790825
+      size: 22705
     - path: reports/figures/optimize_graph.png
       hash: md5
-      md5: f12557c43162c2bca434dcf71f33f115
-      size: 24023
+      md5: 8f929528db0e6f66c6e2e98969704769
+      size: 28551
