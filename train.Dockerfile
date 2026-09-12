@@ -15,5 +15,11 @@ COPY .dvc/config .dvc/config
 
 RUN uv sync --frozen
 
-ENTRYPOINT ["sh", "-c", "uv run dvc pull && uv run dvc repro"]
+ENTRYPOINT uv run dvc remote modify --local origin auth basic && \
+    uv run dvc remote modify --local origin user "$DAGSHUB_USERNAME" && \
+    uv run dvc remote modify --local origin password "$DVC_REMOTE_PASSWORD" && \
+    uv run dvc pull && \
+    uv run dvc repro && \
+    uv run dvc push
+
 

@@ -14,11 +14,6 @@ from pydantic import Field
 app = typer.Typer()
 
 
-dagshub.init(
-    repo_owner=os.getenv("DAGSHUB_USERNAME"),
-    repo_name=os.getenv("DAGSHUB_REPO_NAME"),
-    mlflow=True,
-)
 
 
 @app.command()
@@ -27,9 +22,15 @@ def main(
     prediction_type: Annotated[
         Literal["single", "Batch"],
         typer.Option()
-        ]="single",
+        ]="Batch",
     sklearn_model_path= None
     ):
+    dagshub.init(
+    repo_owner=os.getenv("DAGSHUB_USERNAME"),
+    repo_name=os.getenv("DAGSHUB_REPO_NAME"),
+    mlflow=True,
+    )
+
     
     test_data= load_csv(input_path)
     if sklearn_model_path == None:

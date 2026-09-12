@@ -3,10 +3,20 @@ name: ci
 
 on: push
 
+permissions:
+  contents: write
+
 jobs:
   build_pipeline:
     name: mlops_pipeline
     runs-on: ubuntu-latest
+
+    env:
+      DAGSHUB_USERNAME: ${{ vars.DAGSHUB_USERNAME }}
+      DAGSHUB_REPO_NAME: ${{ vars.DAGSHUB_REPO_NAME }}
+      DAGSHUB_USER_TOKEN: ${{ secrets.DAGSHUB_USER_TOKEN }}
+      DVC_REMOTE_PASSWORD: ${{ secrets.DVC_REMOTE_PASSWORD }}
+      MLFLOW_TRACKING_URI: ${{vars.MLFLOW_TRACKING_URI}}
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -24,7 +34,60 @@ jobs:
       - name: Build train dockerimage
         run : docker build -f train.Dockerfile -t train:latest .
 
+      - name: Run train image and update the model
+        run: |
+          docker run --name train_run \
+            -e MLFLOW_TRACKING_URI="$MLFLOW_TRACKING_URI" \
+            -e DAGSHUB_USERNAME="$DAGSHUB_USERNAME" \
+            -e DAGSHUB_REPO_NAME="$DAGSHUB_REPO_NAME" \
+            -e DAGSHUB_USER_TOKEN="$DAGSHUB_USER_TOKEN" \
+            -e DVC_REMOTE_PASSWORD="$DVC_REMOTE_PASSWORD" \
+            train:latest
+
+      - name: Copy updated dvc.lock out of the container
+        run: docker cp train_run:/app/dvc.lock ./dvc.lock
+
+      - name: Remove train container
+        if: always()
+        run: docker rm train_run
+
+      - name: Commit updated dvc.lock
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dvc.lock
+          if git diff --cached --quiet; then
+            echo "dvc.lock unchanged, nothing to commit"
+          else
+            git commit -m "chore: update dvc.lock from automated retraining [skip ci]"
+            git push
+          fi
+
       - name: Build inference dockerimage
-        run: docker build -f api.Dockerfile -t train:latest .
+        run: docker build -f api.Dockerfile -t predict:latest .
+
+      - name: Serve API and check health
+        run: |
+          docker run -d --name predict_test \
+            -e MLFLOW_TRACKING_URI="$MLFLOW_TRACKING_URI" \
+            -e DAGSHUB_USERNAME="$DAGSHUB_USERNAME" \
+            -e DAGSHUB_REPO_NAME="$DAGSHUB_REPO_NAME" \
+            -e DAGSHUB_USER_TOKEN="$DAGSHUB_USER_TOKEN" \
+            -p 8080:8080 \
+            predict:latest
+
+          for i in $(seq 1 15); do
+            if curl -sf http://localhost:8080/health; then
+              echo "API is healthy"
+              docker stop predict_test
+              exit 0
+            fi
+            sleep 2
+          done
+
+          echo "API failed health check"
+          docker logs predict_test
+          docker stop predict_test
+          exit 1
 
 
