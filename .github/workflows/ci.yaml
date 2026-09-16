@@ -1,5 +1,5 @@
 
-name: ci
+name: ci/cd
 
 on: push
 
@@ -90,4 +90,16 @@ jobs:
           docker stop predict_test
           exit 1
 
+      - name: Deploy to EC2
+        if: github.ref == 'refs/heads/main'
+        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2 # v1.2.5
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script_stop: true
+          script: |
+            cd ~/ISP-chustomer-churn/"Internet Service Provider Customer Churn"
+            git pull origin main
+            docker compose up -d --build
 
