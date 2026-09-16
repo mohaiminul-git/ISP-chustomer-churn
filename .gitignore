@@ -152,6 +152,7 @@ celerybeat.pid
 
 # Environments
 .env
+*.pem
 .venv
 env/
 venv/
@@ -196,3 +197,4 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 /models/*.pkl
+*.pem
