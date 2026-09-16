@@ -99,7 +99,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script_stop: true
           script: |
-            cd ~/ISP-chustomer-churn/"Internet Service Provider Customer Churn"
+            cd ~/"Internet Service Provider Customer Churn"
             git pull origin main
             docker compose up -d --build
 
