@@ -1,10 +1,10 @@
-
+import time
 from fastapi import APIRouter,status,UploadFile,File, Depends
 import pandas as pd
 from src.features import generate_features
 from src.modeling.predict import  batch_prediction
 from api.lifespan import get_model
-
+from api. metrics import PREDICTION_LATENCY, PREDICTION_COUNTER
 router= APIRouter()
 
 
@@ -17,5 +17,10 @@ async def batch_predict_result(
         
     df= pd.read_csv(request.file)
     final_df= generate_features(df)
+    start= time.perf_counter()
     pred= batch_prediction(final_df,model)
+    PREDICTION_LATENCY.labels(endpoint="batch").observe(time.perf_counter()-start)
+    
+    for cls in pred["prediction"]: 
+        PREDICTION_COUNTER.labels(endpoint="batch", predicted_class= str(cls)).inc()
     return pred
