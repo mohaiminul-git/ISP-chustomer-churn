@@ -19,7 +19,7 @@ This project demonstrates an **end-to-end MLOps lifecycle** for a customer churn
 
 The goal is to demonstrate how a machine learning model can be developed, deployed, and maintained as a reproducible and observable production system—not just trained and evaluated as an isolated model.
 
-**Scope, in one paragraph:** raw churn data is pulled from Kaggle and run through a DVC-versioned pipeline (ingest → validate → clean → engineer features → train), where Optuna tunes three model families under MLflow tracking, with the best-performing model registered and promoted to the champion alias. That model is served through a FastAPI app (single + batch prediction), containerized with Docker, instrumented with Prometheus, and visualized in Grafana. GitHub Actions retrains, rebuilds, health-checks, and — on a passing build — redeploys the whole stack to AWS EC2 automatically. Every stage is independently reproducible and versioned; nothing is a one-off manual step except the initial setup.
+**Overview:** raw churn data is pulled from Kaggle and run through a DVC-versioned pipeline (ingest → validate → clean → engineer features → train), where Optuna tunes three model families under MLflow tracking, with the best-performing model registered and promoted to the champion alias. That model is served through a FastAPI app (single + batch prediction), containerized with Docker, instrumented with Prometheus, and visualized in Grafana. GitHub Actions retrains, rebuilds, health-checks, and — on a passing build — redeploys the whole stack to AWS EC2 automatically. Every stage is independently reproducible and versioned; nothing is a one-off manual step except the initial setup.
 
 ## Architecture
 
