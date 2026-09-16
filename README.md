@@ -1,6 +1,10 @@
+
+
+
+
 # ISP Customer Churn — End-to-End MLOps Pipeline
 
-Predicting customer churn for an Internet Service Provider, built as a complete MLOps system: versioned data pipeline, tracked experiments, automated CI/CD, containerized serving, and production monitoring — not just a model in a notebook.
+An end-to-end MLOps system for ISP customer churn prediction, covering data versioning, reproducible pipelines, experiment tracking, model serving, CI/CD, and production monitoring.
 
 [![CI/CD](https://github.com/mohaiminul-git/ISP-chustomer-churn/actions/workflows/ci.yaml/badge.svg)](https://github.com/mohaiminul-git/ISP-chustomer-churn/actions)
 ![Python](https://img.shields.io/badge/python-3.10-blue)
@@ -9,13 +13,13 @@ Predicting customer churn for an Internet Service Provider, built as a complete 
 ![DVC](https://img.shields.io/badge/data-DVC-945DD6?logo=dvc&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
-## Why this project
+## Why This Project
 
-Most churn-prediction projects stop at a Jupyter notebook with a good accuracy score. This one goes further: it's built the way a churn model would actually need to run in production — reproducible data pipeline, tracked experiments, automated retraining, health-checked deployments, and real-time observability into what the model is doing after it ships.
+This project demonstrates an **end-to-end MLOps lifecycle** for a customer churn prediction system, covering data versioning, reproducible pipelines, experiment tracking, model optimization, deployment, CI/CD, and production monitoring.
 
-I built this to learn and demonstrate the full MLOps lifecycle end to end, not just the modeling piece — every stage below was implemented, tested, and understood individually rather than scaffolded from a template.
+The goal is to demonstrate how a machine learning model can be developed, deployed, and maintained as a reproducible and observable production system—not just trained and evaluated as an isolated model.
 
-**Scope, in one paragraph:** raw churn data is pulled from Kaggle and run through a DVC-versioned pipeline (ingest → validate → clean → engineer features → train), where Optuna tunes three model families under MLflow tracking and promotes only a genuinely better model to "champion." That model is served through a FastAPI app (single + batch prediction), containerized with Docker, instrumented with Prometheus, and visualized in Grafana. GitHub Actions retrains, rebuilds, health-checks, and — on a passing build — redeploys the whole stack to AWS EC2 automatically. Every stage is independently reproducible and versioned; nothing is a one-off manual step except the initial setup.
+**Scope, in one paragraph:** raw churn data is pulled from Kaggle and run through a DVC-versioned pipeline (ingest → validate → clean → engineer features → train), where Optuna tunes three model families under MLflow tracking, with the best-performing model registered and promoted to the champion alias. That model is served through a FastAPI app (single + batch prediction), containerized with Docker, instrumented with Prometheus, and visualized in Grafana. GitHub Actions retrains, rebuilds, health-checks, and — on a passing build — redeploys the whole stack to AWS EC2 automatically. Every stage is independently reproducible and versioned; nothing is a one-off manual step except the initial setup.
 
 ## Architecture
 
@@ -175,13 +179,13 @@ uv run dvc repro   # runs ingest → validate → clean → features → train
 
 ## What I'd improve next
 
-- **Data/concept drift detection** — statistically comparing production input distributions against the training set. Scoped out deliberately to keep this iteration focused on service-level observability rather than left unfinished by accident.
+- **Data/concept drift detection** — compare production input distributions against the training data and trigger investigation when statistically significant drift is detected.
 - **Deploying the exact image tested in CI** rather than rebuilding on the EC2 host from freshly pulled source — closing that gap would guarantee the bytes tested are the bytes running.
-- **Separating the monitoring stack onto its own instance**, so an API crash doesn't also take down the ability to observe that it crashed.
+- **Separating the monitoring stack onto its own instance**, running Prometheus and Grafana independently from the application infrastructure would preserve observability if the application host or its Docker environment becomes unavailable.
 
 ## Demo
 
-_[Add your demo video link here]_
+https://github.com/user-attachments/assets/a30ab5c6-d1bf-48ea-ac1f-0d9b78ad39cc
 
 ## License
 
